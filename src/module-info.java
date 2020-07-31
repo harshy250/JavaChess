@@ -1,3 +1,4 @@
 
 module JChess {
+    requires guava;
 }
