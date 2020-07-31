@@ -46,7 +46,7 @@ public abstract class Move {
 	}
 
 	public int getDestinationCoordinate(){
-		return this.getDestinationCoordinate();
+		return this.destinationCoordinate;
 	}
 
 	public Piece getMovedPiece(){

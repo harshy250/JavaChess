@@ -40,7 +40,7 @@ public class BlackPlayer extends Player{
 	@Override
 	protected Collection<Move> calculateKingCastles(final Collection<Move> playerLegals,
 													final Collection<Move> opponentsLegals) {
-		final List<Move> kingCastles = new ArrayList<>();
+		final List<Move> kingCastle = new ArrayList<>();
 
 		if(this.playerKing.isFirstMove() && !this.isInCheck()) {
 			if(!this.board.getTile(5).isTileOccupied() && !this.board.getTile(6).isTileOccupied()){
@@ -51,11 +51,11 @@ public class BlackPlayer extends Player{
 					if(Player.calculateAttacksOnTile(5, opponentsLegals).isEmpty() &&
 							Player.calculateAttacksOnTile(6, opponentsLegals).isEmpty() &&
 							rookTile.getPiece().getPieceType().isRook()) {
-						kingCastles.add(new Move.KingSideCastleMove(this.board,
+						kingCastle.add(new Move.KingSideCastleMove(this.board,
 										this.playerKing,
 										6,
 										(Rook)rookTile.getPiece(),
-										rookTile.getTileCoordinate(),
+										7,
 										5));
 					}
 				}
@@ -67,17 +67,21 @@ public class BlackPlayer extends Player{
 					!this.board.getTile(3).isTileOccupied()){
 				//White Queen's side castle
 				final Tile rookTile = this.board.getTile(0);
-				if(rookTile.isTileOccupied() && rookTile.getPiece().isFirstMove()) {
-					kingCastles.add(new Move.QueenSideCastleMove(this.board,
-																this.playerKing,
-																2,
-																(Rook) rookTile.getPiece(),
-																rookTile.getTileCoordinate()
-																3));
+				if(Player.calculateAttacksOnTile(2, opponentsLegals).isEmpty() &&
+					Player.calculateAttacksOnTile(3,opponentsLegals).isEmpty() &&
+					rookTile.getPiece().getPieceType().isRook()) {
+					if (rookTile.isTileOccupied() && rookTile.getPiece().isFirstMove()) {
+						kingCastle.add(new Move.QueenSideCastleMove(this.board,
+								this.playerKing,
+								2,
+								(Rook) rookTile.getPiece(),
+								0,
+								3));
+					}
 				}
 			}
 		}
 
-		return ImmutableList.copyOf(kingCastles);
+		return ImmutableList.copyOf(kingCastle);
 	}
 }

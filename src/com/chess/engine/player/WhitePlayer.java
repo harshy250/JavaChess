@@ -38,7 +38,7 @@ public class WhitePlayer extends Player{
 
 	@Override
 	protected Collection<Move> calculateKingCastles(final Collection<Move> playerLegals, final Collection<Move> opponentsLegals) {
-		final List<Move> kingCastles = new ArrayList<>();
+		final List<Move> kingCastle = new ArrayList<>();
 
 		if(this.playerKing.isFirstMove() && !this.isInCheck()) {
 			if(!this.board.getTile(61).isTileOccupied() && !this.board.getTile(62).isTileOccupied()){
@@ -50,11 +50,11 @@ public class WhitePlayer extends Player{
 					if(Player.calculateAttacksOnTile(61, opponentsLegals).isEmpty() &&
 							Player.calculateAttacksOnTile(62, opponentsLegals).isEmpty() &&
 							rookTile.getPiece().getPieceType().isRook()) {
-						kingCastles.add(new Move.KingSideCastleMove(this.board,
+						kingCastle.add(new Move.KingSideCastleMove(this.board,
 																	this.playerKing,
 													62,
 																	(Rook)rookTile.getPiece(),
-																	rookTile.getTileCoordinate(),
+																	63,
 																	61));
 					}
 				}
@@ -65,18 +65,23 @@ public class WhitePlayer extends Player{
 					!this.board.getTile(57).isTileOccupied()){
 				//White Queen's side castle
 				final Tile rookTile = this.board.getTile(56);
-				if(rookTile.isTileOccupied() && rookTile.getPiece().isFirstMove()) {
-					//TODO add a castle move!
-					kingCastles.add(new Move.QueenSideCastleMove(this.board,
-																this.playerKing,
-																58,
-																(Rook)rookTile.getPiece(),
-																rookTile.getTileCoordinate(),
-																59));
+				if(Player.calculateAttacksOnTile(58, opponentsLegals).isEmpty() &&
+						Player.calculateAttacksOnTile(59, opponentsLegals).isEmpty()
+						&& rookTile.getPiece().getPieceType().isRook()) {
+					if (rookTile.isTileOccupied() && rookTile.getPiece().isFirstMove()) {
+						//TODO add a castle move!
+						kingCastle.add(new Move.QueenSideCastleMove(this.board,
+								this.playerKing,
+								58,
+								(Rook) rookTile.getPiece(),
+								56,
+								59));
+					}
 				}
+
 			}
 		}
 
-		return ImmutableList.copyOf(kingCastles);
+		return ImmutableList.copyOf(kingCastle);
 	}
 }

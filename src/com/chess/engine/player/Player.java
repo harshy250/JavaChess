@@ -35,14 +35,14 @@ public abstract class Player {
 		return this.legalMoves;
 	}
 
-	protected static Collection<Move> calculateAttacksOnTile(int piecePosition, Collection<Move> moves) {
+	public static Collection<Move> calculateAttacksOnTile(int piecePosition, Collection<Move> moves) {
 		final List<Move> attackMoves = new ArrayList<>();
 		for(final Move  move : moves){
 			if(piecePosition == move.getDestinationCoordinate()){
 				attackMoves.add(move);
 			}
 		}
-		return attackMoves;
+		return ImmutableList.copyOf(attackMoves);
 	}
 
 	private King establishKing(){
@@ -62,11 +62,11 @@ public abstract class Player {
 		return this.isInCheck;
 	}
 
-	public boolean isCheckMate(){
+	public boolean isInCheckMate(){
 		return this.isInCheck && !hasEscapeMoves();
 	}
 
-	public boolean isStaleMate(){
+	public boolean isInStaleMate(){
 		return !this.isInCheck && !hasEscapeMoves();
 	}
 
