@@ -42,7 +42,6 @@ public class BoardUtils {
 		for(int i=0; i<BoardUtils.NUM_TILES; i++) {
 			positionToCoordinate.put(ALGEBRAIC_NOTATION[i], i);
 		}
-
 		return ImmutableMap.copyOf(positionToCoordinate);
 	}
 

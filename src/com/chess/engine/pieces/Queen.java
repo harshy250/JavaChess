@@ -12,6 +12,8 @@ import com.chess.engine.board.Move.AttackMove;
 import com.chess.engine.board.Move.MajorMove;
 import com.chess.engine.board.Tile;
 
+import static com.chess.engine.board.Move.*;
+
 public class Queen extends Piece{
 	
 	private final static int[] CANDIDATE_MOVE_VECTOR_COORDINATES = { -9, -8, -7, -1, 1, 7, 8, 9 };
@@ -43,7 +45,7 @@ public class Queen extends Piece{
 						final Piece pieceAtDestination = candidateDestinationTile.getPiece();
 						final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
 						if(this.pieceAlliance != pieceAlliance) {
-							legalMoves.add(new AttackMove(board, this, candidateDestinationCoordinate, pieceAtDestination)); //attacking move
+							legalMoves.add(new MajorAttackMove(board, this, candidateDestinationCoordinate, pieceAtDestination)); //attacking move
 						}
 						break;
 					}
