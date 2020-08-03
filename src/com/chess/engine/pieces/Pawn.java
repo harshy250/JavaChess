@@ -56,6 +56,14 @@ public class Pawn extends Piece{
 						// To do more here
 						legalMoves.add(new PawnAttackMove(board, this, candidateDestinationCoordinate, pieceOnCandidate));
 					}
+				} else if(board.getEnPassantPawn() != null) {
+					if(board.getEnPassantPawn().getPiecePosition() == (this.piecePosition+ (this.pieceAlliance.getOppositeDirection()))) {
+						final Piece pieceOnCandidate = board.getEnPassantPawn();
+						if (this.pieceAlliance != pieceOnCandidate.getPieceAlliance()) {
+							legalMoves.add(new PawnEnPassantAttackMove(board, this, candidateDestinationCoordinate, pieceOnCandidate));
+
+						}
+					}
 				}
 				
 			} else if(currentCandidateOffset == 9 &&
@@ -66,6 +74,14 @@ public class Pawn extends Piece{
 					if(this.pieceAlliance != pieceOnCandidate.getPieceAlliance()) {
 						// To do more here
 						legalMoves.add(new PawnAttackMove(board, this, candidateDestinationCoordinate, pieceOnCandidate));
+					}
+				} else if(board.getEnPassantPawn() != null) {
+					if(board.getEnPassantPawn().getPiecePosition() == (this.piecePosition - (this.pieceAlliance.getOppositeDirection()))) {
+						final Piece pieceOnCandidate = board.getEnPassantPawn();
+						if (this.pieceAlliance != pieceOnCandidate.getPieceAlliance()) {
+							legalMoves.add(new PawnEnPassantAttackMove(board, this, candidateDestinationCoordinate, pieceOnCandidate));
+
+						}
 					}
 				}
 				

@@ -20,20 +20,21 @@ public class Board {
 	private final BlackPlayer blackPlayer;
 	private final Player currentPlayer;
 
-
+	private final Pawn enPassantPawn;
 	
 
 	private Board(final Builder builder) {
-		 this.gameBoard = createGameBoard(builder);
-		 this.whitePieces = calculateActivePieces(this.gameBoard, Alliance.White);
-		 this.blackPieces = calculateActivePieces(this.gameBoard, Alliance.Black);
+		this.gameBoard = createGameBoard(builder);
+		this.enPassantPawn = builder.enPassantPawn;
+		this.whitePieces = calculateActivePieces(this.gameBoard, Alliance.White);
+		this.blackPieces = calculateActivePieces(this.gameBoard, Alliance.Black);
 
-		 final Collection<Move> whiteStandardLegalMoves = calculateLegalMoves(this.whitePieces);
-		 final Collection<Move> blackStandardLegalMoves = calculateLegalMoves(this.blackPieces);
+		final Collection<Move> whiteStandardLegalMoves = calculateLegalMoves(this.whitePieces);
+		final Collection<Move> blackStandardLegalMoves = calculateLegalMoves(this.blackPieces);
 
-		 this.whitePlayer = new WhitePlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
-		 this.blackPlayer = new BlackPlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
-		 this.currentPlayer = builder.nextMoveMaker.choosePlayer(this.whitePlayer, this.blackPlayer);
+		this.whitePlayer = new WhitePlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
+		this.blackPlayer = new BlackPlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
+		this.currentPlayer = builder.nextMoveMaker.choosePlayer(this.whitePlayer, this.blackPlayer);
 	}
 	
 	@Override
@@ -59,6 +60,10 @@ public class Board {
 
 	public Player currentPlayer(){
 		return this.currentPlayer;
+	}
+
+	public Pawn getEnPassantPawn() {
+		return this.enPassantPawn;
 	}
 
 	public Collection<Piece> getBlackPieces(){
