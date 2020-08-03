@@ -87,4 +87,5 @@ public class BoardUtils {
 	public static String getPositionAtCoordinate(final int coordinate) {
     	return ALGEBRAIC_NOTATION[coordinate];
 	}
+
 }
